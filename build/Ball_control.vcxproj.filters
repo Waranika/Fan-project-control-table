@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{CB27DDDB-925C-3044-A1EE-634326C7DEBB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
