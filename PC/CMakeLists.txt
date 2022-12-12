@@ -11,6 +11,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(Ball_control src/main.cpp)
 
 
+
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
