@@ -4,6 +4,15 @@
     <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\ImageProcessing\image_processing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\Control\control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\external\simple-serial-port\SimpleSerial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\CMakeLists.txt" />
