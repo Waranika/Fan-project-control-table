@@ -27,6 +27,7 @@ void setup() {
 
   pwm.begin();
 
+  pwm.setOscillatorFrequency(27000000);
   pwm.setPWMFreq(0);  // Analog servos run at ~50 Hz updates
 
   delay(10);
@@ -34,10 +35,11 @@ void setup() {
 
 void loop() {
   // Drive each servo one at a time using setPWM()
-  Serial.println("pin n°", servonum);
+
   for (uint16_t pulselen = SERVOMIN; pulselen < SERVOMAX; pulselen++) {
     pwm.setPWM(servonum, 0, pulselen);
   }
+  
 
   
 }
