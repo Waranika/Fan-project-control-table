@@ -1,3 +1,14 @@
+/**
+ * @file control.cpp
+ * @author Bernard Szeliga (b.szeliga@ecam.fr)
+ * @brief Control module for the fan table project. Includes simple centering
+ * as well as digital PID controller
+ * @version 0.1
+ * @date 2022-12-26
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <control.h>
 #include <../common_config.h>
 
@@ -5,7 +16,7 @@
 
 /** Internal variables **/
 static cv::Point zone = cv::Point(0,0);
-static PIDController pid;
+static PIDController xPID,yPID;
 
 extern cv::Point work_area[2];
 extern cv::Point target;
@@ -33,43 +44,48 @@ void simple_centering(cv::Point location, uint8_t* speeds){
 }
 
 void PID_controller(cv::Point location, uint8_t* speeds){
-    cv::Point error(target.x - location.x, target.y - location.y);
+    cv::Point table_loc(location.x - work_area[0].x, location.y - work_area[0].y);
+    cv::Point error(target.x - location.x,
+                    target.y - location.y);
     
     /* Proportional part */
-    pid.proportional[0] = pid.kp * (float)error.x;
-    pid.proportional[1] = pid.kp * (float)error.y;
+    xPID.proportional = xPID.kp * (float)error.x;
+    yPID.proportional = yPID.kp * (float)error.y;
     /* Integrating part */
-    pid.integrator[0] = pid.integrator[0] + 0.5f * pid.ki * pid.t * (error.x + pid.prev_error[0]);
-    pid.integrator[1] = pid.integrator[1] + 0.5f * pid.ki * pid.t * (error.x + pid.prev_error[1]);
+    xPID.integrator = xPID.integrator + 0.5f * xPID.ki * xPID.t * (error.x + xPID.prev_error);
+    yPID.integrator = yPID.integrator + 0.5f * yPID.ki * yPID.t * (error.x + yPID.prev_error);
     /**
      * Derivative (band-limited differentiator)
      * 
      * Note: derivative on measurement, therefore minus sign in front of equation
      * Derivative on measurement prevents kick when set-point is changed
      */
-    pid.derivative[0] = -(2.0f * pid.kd * (location.x - pid.prev_measurement[0])
-                        + (2.0f * pid.tau - pid.t) * pid.derivative[0])
-                        / (2.0f * pid.tau + pid.t);
-    pid.derivative[1] = -(2.0f * pid.kd * (location.y - pid.prev_measurement[1])
-                        + (2.0f * pid.tau - pid.t) * pid.derivative[1])
-                        / (2.0f * pid.tau + pid.t);
+    xPID.derivative = -(2.0f * xPID.kd * (table_loc.x - xPID.prev_measurement));
+                        // + (2.0f * pid.tau - pid.t) * pid.derivative[0])
+                        // / (2.0f * pid.tau + pid.t);
+    yPID.derivative = -(2.0f * yPID.kd * (table_loc.y - yPID.prev_measurement));
+                        // + (2.0f * pid.tau - pid.t) * pid.derivative[1])
+                        // / (2.0f * pid.tau + pid.t);
     /* Output */
-    pid.out[0] = pid.proportional[0] + pid.integrator[0] + pid.derivative[0];
-    pid.out[1] = pid.proportional[1] + pid.integrator[1] + pid.derivative[1];
+    xPID.out = xPID.proportional + xPID.integrator + xPID.derivative;
+    yPID.out = yPID.proportional + yPID.integrator + yPID.derivative;
     /* Saturation */
-    if (pid.out[0] > FAN_MAX_SPEED)
-        pid.out[0] = FAN_MAX_SPEED;
-    else if (pid.out[0] < 0)
-        pid.out[0] = 0;
-    if (pid.out[1] > FAN_MAX_SPEED)
-        pid.out[1] = FAN_MAX_SPEED;
-    else if (pid.out[1] < 0)
-        pid.out[1] = 0;
+    if (xPID.out > FAN_MAX_SPEED / 2)
+        xPID.out = FAN_MAX_SPEED / 2;
+    else if (xPID.out < -FAN_MAX_SPEED / 2)
+        xPID.out = - FAN_MAX_SPEED / 2;
+    if (yPID.out > FAN_MAX_SPEED / 2)
+        yPID.out = FAN_MAX_SPEED / 2;
+    else if (yPID.out < - FAN_MAX_SPEED / 2)
+        yPID.out = - FAN_MAX_SPEED / 2;
+    /* Mapping to unsigned */
+    xPID.out += FAN_MAX_SPEED / 2;
+    yPID.out += FAN_MAX_SPEED / 2;    
     /* Update buffers */
-    pid.prev_measurement[0] = location.x;
-    pid.prev_measurement[1] = location.y;
-    pid.prev_error[0] = error.x;
-    pid.prev_error[1] = error.y;
+    xPID.prev_measurement = table_loc.x;
+    yPID.prev_measurement = table_loc.y;
+    xPID.prev_error = error.x;
+    yPID.prev_error = error.y;
     /* Update active zone */
     calculate_active_zone(location);
     /* Reset fans speeds */
@@ -77,10 +93,10 @@ void PID_controller(cv::Point location, uint8_t* speeds){
         speeds[i] = 0;
     }
     /* Set active fans speeds */
-    speeds[zone.x] = pid.out[1];
-    speeds[NO_FANS - NO_FANS_Y - zone.x - 1] = FAN_MAX_SPEED - pid.out[1];
-    speeds[NO_FANS_X + zone.y] = pid.out[0];
-    speeds[NO_FANS - zone.y - 1] = FAN_MAX_SPEED - pid.out[0];
+    speeds[zone.x] = yPID.out;
+    speeds[NO_FANS - NO_FANS_Y - zone.x - 1] = FAN_MAX_SPEED - yPID.out;
+    speeds[NO_FANS_X + zone.y] = xPID.out;
+    speeds[NO_FANS - zone.y - 1] = FAN_MAX_SPEED - xPID.out;
     
 }
 

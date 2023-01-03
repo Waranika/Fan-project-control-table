@@ -60,18 +60,20 @@
  * Communication configuration
  * 
  */
-#define COM_PORT "\\\\.\\COM8"
-#define BOUD_RATE (DWORD)CBR_9600
+#define COM_PORT "\\\\.\\COM6"
+#define BOUD_RATE (DWORD)CBR_115200
 
 /**
  * PID configuration
  * 
  */
+#define CONTROL_METHOD PID
+// #define CONTROL_METHOD SIMPLE
 #define SAMPLING_TIME_US 33333 // 1/30Hz
-#define PID_KP 0.5
-#define PID_KI 0.02
-#define PID_KD 0.002
-#define PID_TAU 0.001
+#define PID_KP (float)0.5
+#define PID_KI (float)0.02
+#define PID_KD (float)0.002
+#define PID_TAU (float)0
 
 /**
  * OpenCV color definitions

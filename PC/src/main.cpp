@@ -23,80 +23,65 @@
 #include "common_config.h"
 #include "ImageProcessing/image_processing.h"
 #include "Control/control.h"
-
+#include "Communication/communication.h"
+#include "DebugUtils/utils.h"
 
 int main()
 {
-    // Create camera capture
-    cv::Mat frame;           
-    if (camera_init(BUILT_IN))
+    // Create camera capture 
+    if (camera_init(EXTERNAL))
+        // Exit code if no camera is detected  
         return -1;
-    /* Configuration of serial port */
-    // SimpleSerial Serial(COM_PORT, BOUD_RATE);
-    char read_in[75];
-    // char *to_send;
-    // if(!connected_)
-    // {
-    //     std::cout << "NO ARDUINO DETECTED, ABORTING" << std::endl;
-    //     system("pause");
-    //     return -2;        
-    // }
 
-    // Exit code if no camera is detected
-    int x;
-    int y;
+    /* Local variables */
     uint8_t speeds[16];
-    std::chrono::high_resolution_clock::time_point now;
-    std::chrono::high_resolution_clock::time_point calc_start_time;
+    std::chrono::high_resolution_clock::time_point now, calc_start_time;
+    cv::Mat frame; 
+
+    /* Selecting displayed subprocesses */
+    Subprocesses sub;
+    sub.threshold = true;
+
+    /* Creating window and asigning callback function for mouse */
+    cv::namedWindow("Ball control", 1);
+    cv::setMouseCallback("Ball control", CallBackFunc, NULL);
+    /* Main event loop */
     while (true)
     {
         calc_start_time = std::chrono::high_resolution_clock::now();
-        // Transfer and resize captured frame for procesing
+        system("cls");
+        /* Frame capture */
         frame = get_frame();
-
-        // Get the location of ball
-        Subprocesses sub;
-        // sub.blure_split = true; sub.hsv_split = true;
+        /* Image processing and ball detection */
         cv::Point loc = get_ball_location(frame, sub);
-     
+        /* Loading work area from buffer and displying visual elements */
+        update_work_area();
         frame = draw_visualization(frame, loc);
-        // Display frame with marker on ball
-        cv::namedWindow("Ball control", 1);
-        cv::setMouseCallback("Ball control", CallBackFunc, NULL);
         imshow("Ball control", frame);
-        x = loc.x;
-        y = loc.y;
-        simple_centering(loc, speeds);
+        
+        /* Calculating fan speeds */
+        #if CONTROL_METHOD == SIMPLE
+            /* PID */
+            PID_controller(loc, speeds);
+        #else
+            /* Simple */
+            simple_centering(loc, speeds);
+        #endif
 
         /* Sending the fans speeds to Arduino */
-        sprintf_s(read_in,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
-        speeds[0], speeds[1], speeds[2], speeds[3], speeds[4], speeds[5], speeds[6], speeds[7],
-        speeds[8], speeds[9], speeds[10], speeds[11], speeds[12], speeds[13], speeds[14], speeds[15]);
-        // to_send = &read_in;
-        // Serial.WriteSerialPort(to_send);
+        send_to_table(speeds);
 
-        /* Visualization of fan sppeds */
-        system("cls");
-        printf_s("Ball location \tx:\t%d\ty:\t%d\n", x, y);
-        printf_s("\t%d\t%d\t%d\t%d\t%d\n%d\t\t\t\t\t\t%d\n%d\t\t\t\t\t\t%d\n%d\t\t\t\t\t\t%d\n\t%d\t%d\t%d\t%d\t%d\n",
-        speeds[0], speeds[1], speeds[2], speeds[3], speeds[4], speeds[15], speeds[5], speeds[14], speeds[6],
-        speeds[13], speeds[7], speeds[12], speeds[11], speeds[10], speeds[9], speeds[8]);
-        printf(read_in); // For debug
-
-        /* Exits code if Esc is presed */
-        char c = (char)cv::waitKey(25);
+        /* Exits code if Esc is presed */ 
+        char c = (char)cv::waitKey(1);
         if (c == 27) 
             break;
-        
-        
-        /* Checking calculation time, debug purpouse only */
-        printf("Calculation time: %dms\n",(int)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - calc_start_time).count());
-
-        /* Waiting for new frame */
+        /* Loop time synchronization */
         do{
             now = std::chrono::high_resolution_clock::now();
         }while(std::chrono::duration_cast<std::chrono::microseconds>(now - calc_start_time).count() < SAMPLING_TIME_US);
+
     }
+    /* Releasing camera */
     camera_deinit();
     return 0;
 }

@@ -4,20 +4,25 @@
 #include <opencv2/opencv.hpp>
 #include "../common_config.h"
 
+/**
+ * @brief Structure storing PID controller parameters as well as 
+ * 
+ */
 typedef struct {
+    /* Parameters */
     float kp = PID_KP;
     float ki = PID_KI;
     float kd = PID_KD;
     float tau = PID_TAU;
-    float t = SAMPLING_TIME_US;
-
-    float proportional[2] = {0, 0};
-    float integrator[2] = {0, 0};
-    float derivative[2] = {0, 0};
-
-    float prev_error[2] = {0, 0};
-    float prev_measurement[2] = {0, 0};
-    float out[2] = {0, 0};
+    float t = (float)SAMPLING_TIME_US / 1000000;
+    /* Output buffers */
+    float proportional = 0;
+    float integrator = 0;
+    float derivative = 0;
+    float out = 0;
+    /*Input buffers*/
+    float prev_error = 0;
+    float prev_measurement = 0;
 }PIDController;
 
 /**
@@ -35,5 +40,7 @@ void simple_centering(cv::Point location, uint8_t* speeds);
  * @param location location of the ball in camera point of refarence
  */
 void calculate_active_zone(cv::Point location);
+
+void PID_controller(cv::Point location, uint8_t* speeds);
 
 #endif

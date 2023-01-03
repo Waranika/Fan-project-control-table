@@ -10,6 +10,12 @@
     <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\Control\control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\Communication\communication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\DebugUtils\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\external\simple-serial-port\SimpleSerial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
