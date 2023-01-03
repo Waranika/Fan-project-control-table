@@ -86,6 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "D:/Inne/opencv/build/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -104,10 +105,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -130,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "D:/Inne/opencv/build/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -148,10 +150,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -174,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "D:/Inne/opencv/build/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -192,10 +195,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -218,6 +221,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "D:/Inne/opencv/build/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -235,10 +239,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\ImageProcessing;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Control;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\Communication;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\src\DebugUtils;D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\.\external\simple-serial-port;D:\Inne\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -318,6 +322,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\main.cpp" />
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\ImageProcessing\image_processing.cpp" />
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\Control\control.cpp" />
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\Communication\communication.cpp" />
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\src\DebugUtils\utils.cpp" />
+    <ClCompile Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\PC\external\simple-serial-port\SimpleSerial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\build\ZERO_CHECK.vcxproj">
