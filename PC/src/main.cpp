@@ -1,64 +1,87 @@
-#include <stdio.h>
-#include <opencv2/opencv.hpp>
-#include <iostream>
-#include "config.h"
-
 /**
- * @brief Get the ball location object
- * Locates the ball of color defined by threshold range in config.h
- *
- * @param frame cv::Mat object contajning captured frame
- * @return cv::Point location of a ball
+ * @file main.cpp
+ * @author Bernard Szeliga (b.szeliga@ecam.fr)
+ * @brief Application analyzing the position of the ping-pong ball
+ * on the frame captured by the camera and converts it to fan speed 
+ * commands for "fan table" controlled by Arduino microcontroller
+ * @version 0.1
+ * @date 2022-12-26
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
-cv::Point get_ball_location(cv::Mat frame)
-{
-    // Convert colorspace to HSV for easier detection
-    cv::Mat hsvFrame;
-    cvtColor(frame, hsvFrame, cv::COLOR_BGR2HSV);
-    // Apply gausian blure for reducing impuls noise
-    blur(hsvFrame, hsvFrame, cv::Size(1, 1));
-    // Threshold the image
-    cv::Scalar lowerBound = cv::Scalar(H_MIN, S_MIN, V_MIN);
-    cv::Scalar upperBound = cv::Scalar(H_MAX, S_MAX, V_MAX);
-    cv::Mat threshFrame;
-    inRange(hsvFrame, lowerBound, upperBound, threshFrame);
-    // Calculate the centroid
-    cv::Moments m = moments(threshFrame, false);
-    cv::Point com(m.m10 / m.m00, m.m01 / m.m00);
-    return com;
-}
+/** Includes **/
+/* Standard libraries */
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <chrono>
+/* External */
+#include <opencv2/opencv.hpp>
+#include "../external/simple-serial-port/SimpleSerial.h"
+/* Internal */
+#include "common_config.h"
+#include "ImageProcessing/image_processing.h"
+#include "Control/control.h"
+#include "Communication/communication.h"
+#include "DebugUtils/utils.h"
 
 int main()
 {
-    // Create camera capture
-    cv::Mat frame;           
-    cv::VideoCapture cap(1); 
-    // Exit code if no camera is detected
-    if (!cap.isOpened())
-    {
-        std::cout << "No video stream detected" << std::endl;
-        system("pause");
+    // Create camera capture 
+    if (camera_init(EXTERNAL))
+        // Exit code if no camera is detected  
         return -1;
-    }
+
+    /* Local variables */
+    uint8_t speeds[16];
+    std::chrono::high_resolution_clock::time_point now, calc_start_time;
+    cv::Mat frame; 
+
+    /* Selecting displayed subprocesses */
+    Subprocesses sub;
+    sub.threshold = true;
+
+    /* Creating window and asigning callback function for mouse */
+    cv::namedWindow("Ball control", 1);
+    cv::setMouseCallback("Ball control", CallBackFunc, NULL);
+    /* Main event loop */
     while (true)
     {
-        // Transfer and resize captured frame for procesing
-        cap >> frame;
+        calc_start_time = std::chrono::high_resolution_clock::now();
+        system("cls");
+        /* Frame capture */
+        frame = get_frame();
+        /* Image processing and ball detection */
+        cv::Point loc = get_ball_location(frame, sub);
+        /* Loading work area from buffer and displying visual elements */
+        update_work_area();
+        frame = draw_visualization(frame, loc);
+        imshow("Ball control", frame);
+        
+        /* Calculating fan speeds */
+        #if CONTROL_METHOD == SIMPLE
+            /* PID */
+            PID_controller(loc, speeds);
+        #else
+            /* Simple */
+            simple_centering(loc, speeds);
+        #endif
 
-        // Get the location of ball
-        cv::Point loc = get_ball_location(frame);
-        // Draw marker on received location
-        cv::Scalar color = cv::Scalar(0, 0, 255);
-        drawMarker(frame, loc, color, cv::MARKER_CROSS, 50, 5);
+        /* Sending the fans speeds to Arduino */
+        send_to_table(speeds);
 
-        // Display frame with marker on ball
-        imshow("Ball", frame);
-
-        // Exits code if Esc is presed
-        char c = (char)cv::waitKey(25);
+        /* Exits code if Esc is presed */ 
+        char c = (char)cv::waitKey(1);
         if (c == 27) 
             break;
+        /* Loop time synchronization */
+        do{
+            now = std::chrono::high_resolution_clock::now();
+        }while(std::chrono::duration_cast<std::chrono::microseconds>(now - calc_start_time).count() < SAMPLING_TIME_US);
+
     }
-    cap.release();
+    /* Releasing camera */
+    camera_deinit();
     return 0;
 }
