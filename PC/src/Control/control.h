@@ -8,7 +8,7 @@
  * @brief Structure storing PID controller parameters as well as 
  * 
  */
-typedef struct {
+typedef struct PID{
     /* Parameters */
     float kp = PID_KP;
     float ki = PID_KI;

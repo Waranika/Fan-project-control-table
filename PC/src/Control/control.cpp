@@ -82,10 +82,10 @@ void PID_controller(cv::Point location, uint8_t* speeds){
     xPID.out += FAN_MAX_SPEED / 2;
     yPID.out += FAN_MAX_SPEED / 2;    
     /* Update buffers */
-    xPID.prev_measurement = table_loc.x;
-    yPID.prev_measurement = table_loc.y;
-    xPID.prev_error = error.x;
-    yPID.prev_error = error.y;
+    xPID.prev_measurement = (float)table_loc.x;
+    yPID.prev_measurement = (float)table_loc.y;
+    xPID.prev_error = (float)error.x;
+    yPID.prev_error = (float)error.y;
     /* Update active zone */
     calculate_active_zone(location);
     /* Reset fans speeds */
@@ -93,10 +93,10 @@ void PID_controller(cv::Point location, uint8_t* speeds){
         speeds[i] = 0;
     }
     /* Set active fans speeds */
-    speeds[zone.x] = yPID.out;
-    speeds[NO_FANS - NO_FANS_Y - zone.x - 1] = FAN_MAX_SPEED - yPID.out;
-    speeds[NO_FANS_X + zone.y] = xPID.out;
-    speeds[NO_FANS - zone.y - 1] = FAN_MAX_SPEED - xPID.out;
+    speeds[zone.x] = (uint8_t)yPID.out;
+    speeds[NO_FANS - NO_FANS_Y - zone.x - 1] = FAN_MAX_SPEED - (uint8_t)yPID.out;
+    speeds[NO_FANS_X + zone.y] = (uint8_t)xPID.out;
+    speeds[NO_FANS - zone.y - 1] = FAN_MAX_SPEED - (uint8_t)xPID.out;
     
 }
 

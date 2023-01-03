@@ -26,7 +26,7 @@ typedef enum{
  * @brief Struct for selection of displayed subprocesses
  * 
  */
-typedef struct {
+typedef struct Sub{
     /// @brief Displaying preprocesses image
     bool bgr = false;
     /// @brief Displaying preprocessed image layer-by-layer
