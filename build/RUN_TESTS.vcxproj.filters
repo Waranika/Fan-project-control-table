@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\ECAM\SEMESTER 7\IT_LAB\Fan-project-control-table\build\CMakeFiles\56f76c985e541bf8bdd7199f5a08bc22\RUN_TESTS_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0520AB36-A2DB-38F7-A4A1-069D006CE32E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
